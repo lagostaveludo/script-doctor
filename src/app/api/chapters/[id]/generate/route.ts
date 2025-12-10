@@ -60,7 +60,7 @@ export async function POST(
       .join('\n\n')
 
     // Generate new paragraphs
-    const paragraphs = await generateParagraphs(
+    const result = await generateParagraphs(
       systemContext,
       approvedParagraphs,
       instruction
@@ -71,7 +71,8 @@ export async function POST(
     const tokenEstimate = countTokensEstimate(totalContext)
 
     return NextResponse.json({
-      paragraphs,
+      paragraphs: result.paragraphs,
+      explanation: result.explanation,
       tokenEstimate,
       maxTokens: 128000 // GPT-4o context window
     })
